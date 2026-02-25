@@ -28,7 +28,7 @@ export function generateReadme(config: MeldConfig): string {
   return [
     `# ${config.ide.workspaceName}`,
     "",
-    `A multi-project workspace powered by [meld](https://github.com/ViktorPontinen/meld-cli).`,
+    `A multi-project workspace powered by [meld](https://github.com/vitld/meld-cli).`,
     "",
     `**Enabled agents:** ${enabled}`,
     "",

@@ -1,6 +1,31 @@
-# meld
+```
+ ███╗   ███╗ ███████╗ ██╗      ██████╗
+ ████╗ ████║ ██╔════╝ ██║      ██╔══██╗
+ ██╔████╔██║ █████╗   ██║      ██║  ██║
+ ██║╚██╔╝██║ ██╔══╝   ██║      ██║  ██║
+ ██║ ╚═╝ ██║ ███████╗ ███████╗ ██████╔╝
+ ╚═╝     ╚═╝ ╚══════╝ ╚══════╝ ╚═════╝
+```
+
+[![npm](https://img.shields.io/npm/v/meld-cli)](https://www.npmjs.com/package/meld-cli)
+[![license](https://img.shields.io/github/license/vitld/meld-cli)](LICENSE)
+[![CI](https://github.com/vitld/meld-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/vitld/meld-cli/actions/workflows/ci.yml)
 
 Agent-agnostic settings generator for AI coding agents.
+
+## The spirit of the project
+
+Think of meld as IoC but for agentic workflows and setups. Let's call it AIaC?
+The goal is to mirror your preferred settings across multiple agent CLIs in a small and lightweight tool centralized to a single entry-point or workspace.
+Setup your context, your MCPs (and other settings) and your projects once.
+
+And yes, it's 100% vibe coded. If you find issues, please report!
+
+## Contribution & Issues
+Contributions are welcome! But try to keep it within the spirit of the project. Avoid leaning into the "agent runner and orchestration" space unless it can be done cleanly and without massive overhaul. Other than that, open for suggestions and ideas!
+
+Some known limitations:
+* Windows support (no clue if it works, haven't tested, probably not?)
 
 ## What it does
 
