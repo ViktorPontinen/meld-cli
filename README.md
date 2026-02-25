@@ -31,7 +31,7 @@ mkdir my-hub && cd my-hub
 meld init
 meld project add
 meld gen
-meld claude   # or: meld codex, meld gemini
+meld claude-code   # or: meld codex-cli, meld gemini-cli
 ```
 
 ## Hub structure
@@ -86,9 +86,9 @@ All configuration lives in `meld.jsonc` at the hub root:
 | `meld project list` | List registered projects |
 | `meld open` | Open workspace in IDE |
 | `meld update` | Re-scaffold hub structure |
-| `meld claude` | Launch Claude Code in the agent directory |
-| `meld codex` | Launch Codex CLI in the agent directory |
-| `meld gemini` | Launch Gemini CLI in the agent directory |
+| `meld claude-code` | Launch Claude Code in the agent directory |
+| `meld codex-cli` | Launch Codex CLI in the agent directory |
+| `meld gemini-cli` | Launch Gemini CLI in the agent directory |
 
 ## MCP servers
 
