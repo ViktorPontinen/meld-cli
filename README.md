@@ -100,6 +100,47 @@ All configuration lives in `meld.jsonc` at the hub root:
 }
 ```
 
+## Agents
+
+Each agent supports three configuration options:
+
+| Option | Required | Description |
+|--------|----------|-------------|
+| `enabled` | Yes | Enable config generation for this agent |
+| `dir` | No | Custom subdirectory name under `agents/` (defaults: `claude-code`, `codex`, `gemini`) |
+| `overrides` | No | Raw config overrides deep-merged into the agent's generated settings |
+
+### Overrides
+
+Use `overrides` to customize the generated agent config without editing output files directly. Values are deep-merged — you can add or replace individual keys without wiping generated defaults.
+
+```jsonc
+"agents": {
+  "claude-code": {
+    "enabled": true,
+    "overrides": {
+      "env": {
+        "CLAUDE_CODE_MAX_TURNS": "50"
+      }
+    }
+  },
+  "codex-cli": {
+    "enabled": true,
+    "overrides": {
+      "approval_policy": "never"
+    }
+  }
+}
+```
+
+What you can override depends on the agent's native config format:
+
+| Agent | Config format | Example override keys |
+|-------|---------------|----------------------|
+| Claude Code | `.claude/settings.json` | `env`, `permissions` |
+| Codex CLI | `.codex/config.toml` | `approval_policy`, `sandbox_mode`, `sandbox_workspace_write` |
+| Gemini CLI | `.gemini/settings.json` | `tools`, `mcpServers` |
+
 ## Commands
 
 | Command | Description |
