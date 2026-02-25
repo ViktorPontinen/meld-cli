@@ -18,18 +18,18 @@
         "properties": {
           "path": { "type": "string", "description": "Absolute or ~-relative path to the project" },
           "aliases": { "type": "array", "items": { "type": "string" }, "description": "Natural language names for the project" },
-          "repo": { "type": "string", "description": "GitHub repository (org/repo, optional)" },
-          "readDocs": { "type": "boolean", "description": "Instruct agents to read the project's context file before starting work" }
+          "repo": { "type": "string", "description": "GitHub repository (org/repo, optional)" }
         }
       }
     },
     "agents": {
       "type": "object",
       "description": "Agent configurations — enable/disable and set overrides per agent",
+      "required": ["claude-code", "codex-cli", "gemini-cli"],
       "properties": {
-        "claude-code": { "$ref": "#/definitions/agentConfig" },
-        "codex-cli": { "$ref": "#/definitions/agentConfig" },
-        "gemini-cli": { "$ref": "#/definitions/agentConfig" }
+        "claude-code": { "$ref": "#/definitions/claudeCodeConfig" },
+        "codex-cli": { "$ref": "#/definitions/codexCliConfig" },
+        "gemini-cli": { "$ref": "#/definitions/geminiCliConfig" }
       },
       "additionalProperties": false
     },
@@ -62,14 +62,58 @@
       "type": "string",
       "enum": ["claude-code", "codex-cli", "gemini-cli"]
     },
-    "agentConfig": {
+    "agentConfigBase": {
       "type": "object",
       "required": ["enabled"],
       "properties": {
         "enabled": { "type": "boolean", "description": "Enable config generation for this agent" },
-        "dir": { "type": "string", "description": "Custom subdirectory name for this agent's generated files (defaults to agent-specific name)" },
-        "overrides": { "type": "object", "description": "Agent-specific raw config overrides merged into generated settings", "additionalProperties": true }
+        "dir": { "type": "string", "description": "Custom subdirectory name for this agent's generated files (defaults to agent-specific name)" }
       }
+    },
+    "claudeCodeConfig": {
+      "allOf": [
+        { "$ref": "#/definitions/agentConfigBase" },
+        {
+          "properties": {
+            "enabled": true,
+            "dir": true,
+            "overrides": {
+              "description": "Overrides deep-merged into .claude/settings.json",
+              "$ref": "https://json.schemastore.org/claude-code-settings.json"
+            }
+          }
+        }
+      ]
+    },
+    "codexCliConfig": {
+      "allOf": [
+        { "$ref": "#/definitions/agentConfigBase" },
+        {
+          "properties": {
+            "enabled": true,
+            "dir": true,
+            "overrides": {
+              "description": "Overrides deep-merged into .codex/config.toml",
+              "$ref": "https://developers.openai.com/codex/config-schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "geminiCliConfig": {
+      "allOf": [
+        { "$ref": "#/definitions/agentConfigBase" },
+        {
+          "properties": {
+            "enabled": true,
+            "dir": true,
+            "overrides": {
+              "description": "Overrides deep-merged into .gemini/settings.json",
+              "$ref": "https://raw.githubusercontent.com/google-gemini/gemini-cli/refs/heads/main/schemas/settings.schema.json"
+            }
+          }
+        }
+      ]
     },
     "mcpStdioServer": {
       "type": "object",

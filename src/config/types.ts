@@ -54,8 +54,10 @@ export function isHttpMcp(server: McpServerConfig): server is McpHttpServerConfi
   return server.type === "http";
 }
 
+export type IdeName = "cursor" | "code" | "windsurf";
+
 export interface IdeConfig {
-  default: string;
+  default: IdeName;
   workspaceName: string;
 }
 

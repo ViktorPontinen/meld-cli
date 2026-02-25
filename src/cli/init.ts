@@ -3,7 +3,7 @@ import * as p from "@clack/prompts";
 import { writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { join } from "node:path";
-import type { MeldConfig } from "../config/types.js";
+import type { MeldConfig, IdeName } from "../config/types.js";
 import { readPackageSchema } from "../hub-schema.js";
 import { generateReadme } from "../readme.js";
 
@@ -101,7 +101,7 @@ export const initCommand = new Command("init")
       },
       mcp: {},
       ide: {
-        default: ide as string,
+        default: ide as IdeName,
         workspaceName: workspaceName as string,
       },
     };

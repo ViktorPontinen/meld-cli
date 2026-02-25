@@ -1,6 +1,7 @@
-import type { MeldConfig, AgentName } from "./types.js";
+import type { MeldConfig, AgentName, IdeName } from "./types.js";
 
 const VALID_AGENTS: AgentName[] = ["claude-code", "codex-cli", "gemini-cli"];
+const VALID_IDES: IdeName[] = ["cursor", "code", "windsurf"];
 
 type ValidationResult =
   | { ok: true; config: MeldConfig }
@@ -28,12 +29,21 @@ export function validateConfig(input: unknown): ValidationResult {
 
   // Validate agents
   const agents = obj.agents as Record<string, unknown>;
+  for (const expected of VALID_AGENTS) {
+    if (!(expected in agents)) {
+      errors.push(`Missing required agent: ${expected}`);
+    }
+  }
   for (const name of Object.keys(agents)) {
     if (!VALID_AGENTS.includes(name as AgentName)) {
       errors.push(`Invalid agent name: ${name}. Must be one of: ${VALID_AGENTS.join(", ")}`);
+      continue;
     }
 
     const agent = agents[name] as Record<string, unknown>;
+    if (typeof agent.enabled !== "boolean") {
+      errors.push(`Agent "${name}" must have an "enabled" boolean`);
+    }
     if (
       "overrides" in agent
       && agent.overrides != null
@@ -41,6 +51,15 @@ export function validateConfig(input: unknown): ValidationResult {
     ) {
       errors.push(`Agent "${name}" overrides must be an object`);
     }
+  }
+
+  // Validate ide
+  const ide = obj.ide as Record<string, unknown>;
+  if (typeof ide.default !== "string" || !VALID_IDES.includes(ide.default as IdeName)) {
+    errors.push(`ide.default must be one of: ${VALID_IDES.join(", ")}`);
+  }
+  if (typeof ide.workspaceName !== "string" || !ide.workspaceName) {
+    errors.push("ide.workspaceName must be a non-empty string");
   }
 
   // Validate MCP servers
